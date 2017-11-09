@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    {% block stylesheets %}
+        <link href="{{ asset('bundles/caffeolivuzzoadmin/css/main.css') }}" rel="stylesheet" />
+    {% endblock %}
+
+</head>
+<body>
+
+    <!-- modale confermi eliminazione -->
+    <div class="overlay-modal">
+        <div class="modal-content">
+            <p>Confermi eliminazione?</p>
+            <p>
+                <span class="ok">OK</span>
+                <span class="annulla">Annulla</span>
+            </p>
+        </div>
+    </div>
+    <!-- fine modale -->
+
+    <img src="{{ asset('bundles/caffeolivuzzoadmin/images/logo.png') }}">
+
+    <div id="nav">
+        <ul>
+            <li>
+                <span>Ciao <span>
+            </li>
+            <li>
+                <a href="{{ path('_fotos') }}">Foto</a>
+            </li>
+            <li>
+                <a href="{{ path('_comments', {page: 1 }) }}">Commenti</a>
+            </li>
+            <li>
+                <a href="#">Utenti</a>
+            </li>
+
+            <li>
+                <a href="http://www.caffeolivuzzo.it/index.php?pagina=nostri-clienti" target="_blank">Vai al sito</a>
+            </li>
+
+            <li>
+                <a href="#">Esci</a>
+            </li>
+        </ul>
+    </div>
+
+    {% if comments is not empty %}
+    <table>
+        <thead>
+        <tr>
+            <th>Id Commento</th>
+            <th>Foto</th>
+            <th>Nome e Cognome</th>
+            <th>Commento</th>
+            <th>Data</th>
+            <th>Approvato</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for comment in comments %}
+        <tr>
+            <td style="background-color:#F4F0EA;">{{ comment.id }}</td>
+
+            <td style="background-color:#F4F0EA;">
+                <img width="70" height="auto" src="{{ asset('bundles/caffeolivuzzoadmin/images/nostri-clienti/') }}{{comment.foto}}">
+            </td>
+
+            <td style="background-color:#F4F0EA;">{{ comment.nomeCognome }}</td>
+            <td style="background-color:#F4F0EA;">{{ comment.commento | slice(0, 50) }}...</td>
+            <td style="background-color:#F4F0EA;">{{comment.data | date('Y-m-d')}}</td>
+            <td align="center" style="background-color:#F4F0EA;">{{ comment.approvato }}</td>
+
+            <td style="background-color:#F4F0EA;">
+                <form action="{{ path('_comment_update', {'id': comment.id}) }}" method="post">
+                    <input type="submit" value="Modifica" />
+                </form>
+
+            </td>
+
+            <td style="background-color:#F4F0EA;">
+                <form action="{{ path('_comment_delete', {'id': comment.id}) }}" method="post" class="form-eliminazione">
+                    <input type="submit" value="Elimina" />
+                </form>
+
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>Nessuna foto trovata</p>
+    {% endif %}
+
+    <div style="margin:50px 0;">
+
+        {% if page != 1 %}
+            <span><a class="pagination" href="{{ path('_comments', {page: page -1 }) }}">Indietro</a></span>
+        {% endif %}
+
+        {% for i in 1..totPagine %}
+
+            {% if page == i %}
+                <a class='current' href="{{ path('_comments', {page: i}) }}">{{ i }}</a>
+            {% else %}
+                <a class='pagination' href="{{ path('_comments', {page: i}) }}">{{ i }}</a>
+            {% endif %}
+
+        {% endfor %}
+
+        {% if page < totPagine %}
+            <span><a class="pagination" href="{{ path('_comments', {page: page +1 }) }}">Avanti </a></span>
+        {% endif %}
+
+    </div>
+    
+
+    {% block javascripts %}
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+        <script src="{{ asset('bundles/caffeolivuzzoadmin/js/main.js') }}"></script>
+
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,24 @@
+# foto clienti
+_fotos:
+    path: /fotos/
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:FotoClienti:index }
+ 
+ 
+_foto_delete:
+    path: /foto/delete/{id}
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:FotoClienti:delete }
+
+# commenti clienti
+_comments:
+    path: /comments/{page}
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:CommentiClienti:index, page: 1 }
+    requirements:
+      id:  \d+
+ 
+_comment_update:
+    path: /comment/update/{id}
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:CommentiClienti:update }    
+
+_comment_delete:
+    path: /comment/delete/{id}
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:CommentiClienti:delete }    

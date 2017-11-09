@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    {% block stylesheets %}
+        <link href="{{ asset('bundles/caffeolivuzzoadmin/css/main.css') }}" rel="stylesheet" />
+    {% endblock %}
+
+</head>
+<body>
+
+    <!-- modale confermi eliminazione -->
+    <div class="overlay-modal">
+        <div class="modal-content">
+            <p>Confermi eliminazione?</p>
+            <p>
+                <span class="ok">OK</span>
+                <span class="annulla">Annulla</span>
+            </p>
+        </div>
+    </div>
+    <!-- fine modale -->
+
+    <img src="{{ asset('bundles/caffeolivuzzoadmin/images/logo.png') }}">
+
+    <div id="nav">
+        <ul>
+            <li>
+                <span>Ciao <span>
+            </li>
+            <li>
+                <a href="{{ path('_fotos') }}">Foto</a>
+            </li>
+            <li>
+                <a href="{{ path('_comments', {page: 1 }) }}">Commenti</a>
+            </li>
+            <li>
+                <a href="#">Utenti</a>
+            </li>
+
+            <li>
+                <a href="http://www.caffeolivuzzo.it/index.php?pagina=nostri-clienti" target="_blank">Vai al sito</a>
+            </li>
+
+            <li>
+                <a href="#">Esci</a>
+            </li>
+        </ul>
+    </div>
+    
+    {% if fotos is not empty %}
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Foto</th>
+            <th>Testo Alternativo</th>
+            <th>Data</th>
+            <th>Approvato</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for foto in fotos %}
+        <tr>
+            <td style="background-color:#F4F0EA;">{{ foto.id }}</td>
+            <td style="background-color:#F4F0EA;"><img width="100" height="auto" src="{{ asset('bundles/caffeolivuzzoadmin/images/nostri-clienti/' ) }}{{foto.foto}}"  />
+    </td>
+            <td style="background-color:#F4F0EA;">{{ foto.testoAlternativo }}</td>
+            <td style="background-color:#F4F0EA;">{{foto.data|date('Y-m-d')}}</td>
+            <td align="center" style="background-color:#F4F0EA;">{{ foto.approvato }}</td>
+
+            <td style="background-color:#F4F0EA;">
+                <form action="{{ path('_foto_delete', {'id': foto.id}) }}" method="post" class="form-eliminazione">
+                    <input type="submit" value="Elimina" />
+                </form>
+
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>Nessuna foto trovata</p>
+    {% endif %}
+
+    {% block javascripts %}
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+        <script src="{{ asset('bundles/caffeolivuzzoadmin/js/main.js') }}"></script>
+    {% endblock %}
+</body>
+</html>

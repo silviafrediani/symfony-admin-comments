@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    {% block stylesheets %}
+        <link href="{{ asset('bundles/caffeolivuzzoadmin/css/main.css') }}" rel="stylesheet" />
+    {% endblock %}
+
+</head>
+<body>
+
+    <img src="{{ asset('bundles/caffeolivuzzoadmin/images/logo.png') }}">
+
+    <div id="nav">
+        <ul>
+            <li>
+                <span>Ciao <span>
+            </li>
+            <li>
+                <a href="{{ path('_fotos') }}">Foto</a>
+            </li>
+            <li>
+                <a href="{{ path('_comments', {page: 1 }) }}">Commenti</a>
+            </li>
+            <li>
+                <a href="#">Utenti</a>
+            </li>
+
+            <li>
+                <a href="http://www.caffeolivuzzo.it/index.php?pagina=nostri-clienti" target="_blank">Vai al sito</a>
+            </li>
+
+            <li>
+                <a href="#">Esci</a>
+            </li>
+        </ul>
+    </div>
+
+    <h2>Stai modificando il commento numero {{id}}</h2>
+
+        {{ form_start(form) }}
+            <img width="200" height="auto" src="{{ asset('bundles/caffeolivuzzoadmin/images/nostri-clienti/') }}{{fotoCliente}}">
+            <div>
+                <p>{{ form_label(form.nomeCognome) }}</p>
+                <p>{{ form_widget(form.nomeCognome) }}</p>
+                <p>{{ form_errors(form.nomeCognome) }}</p>
+            </div>
+            <div>
+                <p>{{ form_label(form.commento) }}</p>
+                <p>{{ form_widget(form.commento) }}</p>
+                <p>{{ form_errors(form.commento) }}</p>
+            </div>
+
+            <div>
+                <p>{{ form_label(form.data) }}</p>
+                <p>{{ form_widget(form.data) }}</p>
+                <p>{{ form_errors(form.data) }}</p>
+            </div>
+
+            <div>
+                <p>{{ form_label(form.approvato) }}</p>
+                <p>{{ form_widget(form.approvato) }}</p>
+                <p>{{ form_errors(form.approvato) }}</p>
+            </div>
+
+            <input type="submit" value="Salva" />
+
+        {{ form_end(form) }}
+
+    {% block javascripts %}
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+        <script src="{{ asset('bundles/caffeolivuzzoadmin/js/main.js') }}"></script>
+
+    {% endblock %}
+</body>
+</html>
