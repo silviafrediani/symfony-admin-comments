@@ -2,40 +2,75 @@
 
 namespace CaffeOlivuzzo\AdminBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * FotoClienti
+ *
+ * @ORM\Table(name="foto_clienti")
+ * @ORM\Entity
  */
 class FotoClienti
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
      * @var string
+     *
+     * @ORM\Column(name="foto", type="string", length=500, nullable=false)
      */
     private $foto;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="testo_alternativo", type="string", length=500, nullable=false)
      */
     private $testoAlternativo;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="data", type="datetime", nullable=false)
      */
     private $data = 'CURRENT_TIMESTAMP';
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="approvato", type="integer", nullable=false)
      */
     private $approvato;
 
+
     /**
-     * @var integer
+     * @ORM\OneToMany(targetEntity="CommentiClienti", mappedBy="idFoto")
      */
-    private $id;
+    protected $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
 
-
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set foto
@@ -134,12 +169,36 @@ class FotoClienti
     }
 
     /**
-     * Get id
+     * Add comment
      *
-     * @return integer
+     * @param \CaffeOlivuzzo\AdminBundle\Entity\CommentiClienti $comment
+     *
+     * @return FotoClienti
      */
-    public function getId()
+    public function addComment(\CaffeOlivuzzo\AdminBundle\Entity\CommentiClienti $comment)
     {
-        return $this->id;
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \CaffeOlivuzzo\AdminBundle\Entity\CommentiClienti $comment
+     */
+    public function removeComment(\CaffeOlivuzzo\AdminBundle\Entity\CommentiClienti $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

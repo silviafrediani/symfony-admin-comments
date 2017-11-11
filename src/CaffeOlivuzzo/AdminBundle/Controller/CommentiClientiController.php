@@ -71,12 +71,8 @@ class CommentiClientiController extends Controller
         $em = $this->getDoctrine()->getManager();
         $commento = $em->getRepository('CaffeOlivuzzoAdminBundle:CommentiClienti')->find($id);
 
-        // recupero idFoto del commento dalla tabella commenti_clienti
-        $idFoto = $commento->getIdFoto();
-        // recupero il nome del file della foto dalla tabella foto_clienti
-        $fotoCliente = $em->getRepository('CaffeOlivuzzoAdminBundle:FotoClienti')
-                            ->find($idFoto)
-                            ->getFoto();
+        // recupero il nome del file della foto dalla tabella correlata foto_clienti
+        $fotoCliente = $commento->getIdFoto()->getFoto();
 
         if (!$commento) {
             throw $this->createNotFoundException(

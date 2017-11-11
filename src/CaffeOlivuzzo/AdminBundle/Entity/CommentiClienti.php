@@ -2,47 +2,81 @@
 
 namespace CaffeOlivuzzo\AdminBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * CommentiClienti
+ *
+ * @ORM\Table(name="commenti_clienti", indexes={@ORM\Index(name="id_foto", columns={"id_foto"})})
+ * @ORM\Entity
  */
 class CommentiClienti
 {
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
      * @var string
+     *
+     * @ORM\Column(name="nome_cognome", type="string", length=500, nullable=false)
      */
     private $nomeCognome;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="commento", type="text", length=65535, nullable=false)
      */
     private $commento;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="data", type="datetime", nullable=false)
      */
     private $data = 'CURRENT_TIMESTAMP';
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="rispondia", type="integer", nullable=true)
      */
     private $rispondia;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="approvato", type="integer", nullable=false)
      */
     private $approvato;
 
     /**
-     * @var integer
-     */
-    private $id;
-
-    /**
-     * @var \CaffeOlivuzzo\AdminBundle\Entity\FotoClienti
+     * @var \FotoClienti
+     *
+     * @ORM\ManyToOne(targetEntity="FotoClienti", inversedBy="CommentiClienti")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_foto", referencedColumnName="id")
+     * })
      */
     private $idFoto;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set nomeCognome
@@ -162,16 +196,6 @@ class CommentiClienti
     public function getApprovato()
     {
         return $this->approvato;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

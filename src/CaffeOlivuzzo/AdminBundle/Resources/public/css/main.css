@@ -102,7 +102,7 @@ a:hover {
 	border: 1px solid #96190f;
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"] {
 	width:400px;
 	height:40px;
 	border:1px solid #CCC3B8;
