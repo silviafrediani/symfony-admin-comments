@@ -3,7 +3,8 @@
 security:
 
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        CaffeOlivuzzo\AdminBundle\Entity\User:
+            algorithm: bcrypt
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     role_hierarchy:
@@ -13,7 +14,7 @@ security:
     providers:
         our_db_provider:
             entity:
-                class: AdminBundle:User
+                class: CaffeOlivuzzoAdminBundle:User
                 property: username
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -27,9 +28,20 @@ security:
             form_login:
                 login_path: /login
                 check_path: /login_check
+                #redirect dopo login
+                default_target_path: _comments
+            logout:
+                path:   /logout
+                target: /login
+            provider: our_db_provider
+            remember_me:
+                secret: 915dc97cab36a935cf59a8ac85f829475cba876e
+                lifetime: 604800 # 1 week in seconds
+                path:     /
 
         main:
-            anonymous: ~
+            pattern:    ^/
+            http_basic: ~
 
             # activate different ways to authenticate
 
@@ -41,5 +53,6 @@ security:
 
     access_control:
         # require ROLE_ADMIN for /admin*
-        - { path: ^/comments, roles: ROLE_ADMIN }
-        - { path: ^/fotos, roles: ROLE_ADMIN }
+        - { path: ^/comments, roles: ROLE_USER }
+        - { path: ^/fotos, roles: ROLE_USER }
+        - { path: ^/utenti, roles: ROLE_USER }

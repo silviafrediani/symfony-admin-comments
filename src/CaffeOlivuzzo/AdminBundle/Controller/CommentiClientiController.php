@@ -14,53 +14,16 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 class CommentiClientiController extends Controller
 {
 
-    public function indexAction($page)
+    public function indexAction()
     {
-        $limit = 5;
-        $offset = ($page - 1) * $limit;
-        $em = $this->getDoctrine()->getManager();
-
-        $query = $em->createQueryBuilder()
-            ->select('c.id, f.foto, c.nomeCognome, c.commento, c.data, c.approvato')
-            ->from('CaffeOlivuzzoAdminBundle:CommentiClienti','c')
-            ->innerJoin('CaffeOlivuzzoAdminBundle:FotoClienti', 'f')
-            ->where('c.idFoto = f.id')
-            ->orderBy('c.data', 'DESC')
-            ->setMaxResults($limit)
-            ->setFirstResult($offset)
-            ->getQuery();
-
-        // dql (Doctrine Query Language)
-        /*$query = $em->createQuery(
-            'SELECT c.id, f.foto, c.nomeCognome, c.commento, c.data, c.approvato
-             FROM CaffeOlivuzzoAdminBundle:CommentiClienti c
-             INNER JOIN CaffeOlivuzzoAdminBundle:FotoClienti f
-             WHERE c.idFoto = f.id
-             ORDER BY c.data DESC'
-        )
-        ->setMaxResults($limit)
-        ->setFirstResult($offset);*/
-
-        // memorizzo i risultati nell'array comments
-        $comments = $query->getResult();
-
-        // query builder
-        $qb = $em->createQueryBuilder()
-            ->select('count(c.id)')
-            ->from('CaffeOlivuzzoAdminBundle:CommentiClienti','c')
-            ->innerJoin('CaffeOlivuzzoAdminBundle:FotoClienti', 'f')
-            ->where('c.idFoto = f.id');
-
-        $count = $qb->getQuery()->getSingleScalarResult();
-
-        $totPagine = ceil($count / $limit);
+        $fotos = $this->getDoctrine()
+                     ->getRepository('CaffeOlivuzzoAdminBundle:FotoClienti')
+                     ->findAll();
 
         return $this->render(
             'CaffeOlivuzzoAdminBundle:CommentiClienti:index.html.twig',
             array(
-                'comments' => $comments,
-                'totPagine' => $totPagine,
-                'page' => $page
+                'fotos' => $fotos
             )
         );
     }

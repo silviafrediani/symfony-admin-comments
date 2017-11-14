@@ -1,9 +1,10 @@
 <?php
 
 namespace CaffeOlivuzzo\AdminBundle\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * FotoClienti
@@ -26,6 +27,12 @@ class FotoClienti
      * @var string
      *
      * @ORM\Column(name="foto", type="string", length=500, nullable=false)
+     * @Assert\File(
+     *     maxSize = "5M",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/tiff"},
+     *     maxSizeMessage = "The maxmimum allowed file size is 5MB.",
+     *     mimeTypesMessage = "Only the filetypes image are allowed."
+     * )
      */
     private $foto;
 
@@ -41,7 +48,7 @@ class FotoClienti
      *
      * @ORM\Column(name="data", type="datetime", nullable=false)
      */
-    private $data = 'CURRENT_TIMESTAMP';
+    private $data;
 
     /**
      * @var integer

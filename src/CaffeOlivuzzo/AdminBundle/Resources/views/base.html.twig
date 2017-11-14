@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Test Application{% endblock %}</title>
+
+        {% block stylesheets %}
+            <link href="{{ asset('bundles/caffeolivuzzoadmin/css/bootstrap.css') }}" rel="stylesheet" />
+            <link href="{{ asset('bundles/caffeolivuzzoadmin/css/main.css') }}" rel="stylesheet" />
+        {% endblock %}
+
+    </head>
+    <body>
+        <!-- modale confermi eliminazione -->
+        <div class="overlay-modal">
+            <div class="modal-content">
+                <p>Confermi eliminazione?</p>
+                <p>
+                    <span class="ok">OK</span>
+                    <span class="annulla">Annulla</span>
+                </p>
+            </div>
+        </div>
+        <!-- fine modale -->
+
+        <!-- Preloader -->
+    	<div id="preloader">
+    	  <img src="{{ asset('bundles/caffeolivuzzoadmin/images/loading.gif') }}">
+    	</div>
+
+        <img src="{{ asset('bundles/caffeolivuzzoadmin/images/logo.png') }}">
+
+        <div id="nav">
+            <ul>
+                <li>
+                    <span>Ciao {{ app.user.username }}<span>
+                </li>
+                <li>
+                    <a href="{{ path('_fotos') }}">Foto</a>
+                </li>
+                <li>
+                    <a href="{{ path('_comments') }}">Commenti</a>
+                </li>
+                <li>
+                    <a href="{{ path('_utenti') }}">Utenti</a>
+                </li>
+
+                <li>
+                    <a href="{{ path('_utente_update') }}">I miei dati</a>
+                </li>
+
+                <li>
+                    <a href="{{ path('logout') }}">Esci</a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="content">
+            {% block body %}{% endblock %}
+        </div>
+
+        {% block javascripts %}
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+            <script src="{{ asset('bundles/caffeolivuzzoadmin/js/main.js') }}"></script>
+
+        {% endblock %}
+
+    </body>
+</html>

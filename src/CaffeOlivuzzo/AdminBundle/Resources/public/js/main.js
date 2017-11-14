@@ -1,3 +1,8 @@
+// preloader
+$(window).load(function() {
+    $("#preloader").delay(500).fadeOut("slow");
+});
+
 $(document).ready(function(){
 
     $('.overlay-modal').hide();

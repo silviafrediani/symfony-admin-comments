@@ -2,8 +2,8 @@
 
 namespace CaffeOlivuzzo\AdminBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * FotoClienti
@@ -41,7 +41,7 @@ class FotoClienti
      *
      * @ORM\Column(name="data", type="datetime", nullable=false)
      */
-    private $data = 'CURRENT_TIMESTAMP';
+    private $data;
 
     /**
      * @var integer
@@ -166,39 +166,5 @@ class FotoClienti
     public function getApprovato()
     {
         return $this->approvato;
-    }
-
-    /**
-     * Add comment
-     *
-     * @param \CaffeOlivuzzo\AdminBundle\Entity\CommentiClienti $comment
-     *
-     * @return FotoClienti
-     */
-    public function addComment(\CaffeOlivuzzo\AdminBundle\Entity\CommentiClienti $comment)
-    {
-        $this->comments[] = $comment;
-
-        return $this;
-    }
-
-    /**
-     * Remove comment
-     *
-     * @param \CaffeOlivuzzo\AdminBundle\Entity\CommentiClienti $comment
-     */
-    public function removeComment(\CaffeOlivuzzo\AdminBundle\Entity\CommentiClienti $comment)
-    {
-        $this->comments->removeElement($comment);
-    }
-
-    /**
-     * Get comments
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getComments()
-    {
-        return $this->comments;
     }
 }

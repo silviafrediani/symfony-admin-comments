@@ -1,3 +1,8 @@
+#login
+login:
+    path: /
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:Security:login }
+
 login_route:
     path: /login
     defaults: { _controller: CaffeOlivuzzoAdminBundle:Security:login }
@@ -6,20 +11,34 @@ login_check:
     path: /login_check
     defaults: { _controller: CaffeOlivuzzoAdminBundle:Security:login_check }
 
-#foto clienti
+#logout
+logout:
+    path: /logout
+
+#registration
+user_registration:
+    path:     /register
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:Registration:register }
+
+#foto
 _fotos:
     path: /fotos/
-    defaults: { _controller: CaffeOlivuzzoAdminBundle:FotoClienti:index }
-
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:FotoClienti:index, page: 1 }
+    requirements:
+      id:  \d+
 
 _foto_delete:
     path: /foto/delete/{id}
     defaults: { _controller: CaffeOlivuzzoAdminBundle:FotoClienti:delete }
 
-# commenti clienti
+_foto_update:
+    path: /foto/update/{id}
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:FotoClienti:update }
+
+#commenti
 _comments:
-    path: /comments/{page}
-    defaults: { _controller: CaffeOlivuzzoAdminBundle:CommentiClienti:index, page: 1 }
+    path: /comments/
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:CommentiClienti:index }
     requirements:
       id:  \d+
 
@@ -30,3 +49,16 @@ _comment_update:
 _comment_delete:
     path: /comment/delete/{id}
     defaults: { _controller: CaffeOlivuzzoAdminBundle:CommentiClienti:delete }
+
+#utenti
+_utenti:
+    path: /utenti
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:Utenti:index }
+
+_utente_delete:
+    path: /utente/delete/{id}
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:Utenti:delete }
+
+_utente_update:
+    path: /utente/update/
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:Utenti:update }

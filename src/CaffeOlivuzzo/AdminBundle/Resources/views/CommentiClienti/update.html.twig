@@ -1,77 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
+{% extends 'CaffeOlivuzzoAdminBundle::base.html.twig' %}
 
-    {% block stylesheets %}
-        <link href="{{ asset('bundles/caffeolivuzzoadmin/css/main.css') }}" rel="stylesheet" />
-    {% endblock %}
+{% block title %}Caffè Olivuzzo Admin Commenti Clienti{% endblock %}
 
-</head>
-<body>
+{% block body %}
 
-    <img src="{{ asset('bundles/caffeolivuzzoadmin/images/logo.png') }}">
+<h4>Stai modificando il commento numero {{id}}</h4>
 
-    <div id="nav">
-        <ul>
-            <li>
-                <span>Ciao <span>
-            </li>
-            <li>
-                <a href="{{ path('_fotos') }}">Foto</a>
-            </li>
-            <li>
-                <a href="{{ path('_comments', {page: 1 }) }}">Commenti</a>
-            </li>
-            <li>
-                <a href="#">Utenti</a>
-            </li>
+    {{ form_start(form) }}
+        <img class="img-thumbnail" width="200" height="auto" src="{{ asset('../../images/nostri-clienti/'~ fotoCliente ) }}">
+        <div>
+            <p>{{ form_label(form.nomeCognome) }}</p>
+            <p>{{ form_widget(form.nomeCognome) }}</p>
+            <p>{{ form_errors(form.nomeCognome) }}</p>
+        </div>
+        <div>
+            <p>{{ form_label(form.commento) }}</p>
+            <p>{{ form_widget(form.commento) }}</p>
+            <p>{{ form_errors(form.commento) }}</p>
+        </div>
 
-            <li>
-                <a href="http://www.caffeolivuzzo.it/index.php?pagina=nostri-clienti" target="_blank">Vai al sito</a>
-            </li>
+        <div>
+            <p>{{ form_label(form.data) }}</p>
+            <p>{{ form_widget(form.data) }}</p>
+            <p>{{ form_errors(form.data) }}</p>
+        </div>
 
-            <li>
-                <a href="#">Esci</a>
-            </li>
-        </ul>
-    </div>
+        <div>
+            <p>{{ form_label(form.approvato) }}</p>
+            <p>{{ form_widget(form.approvato) }}</p>
+            <p>{{ form_errors(form.approvato) }}</p>
+        </div>
 
-    <h2>Stai modificando il commento numero {{id}}</h2>
+        <input type="submit" value="Salva" />
 
-        {{ form_start(form) }}
-            <img width="200" height="auto" src="{{ asset('bundles/caffeolivuzzoadmin/images/nostri-clienti/') }}{{fotoCliente}}">
-            <div>
-                <p>{{ form_label(form.nomeCognome) }}</p>
-                <p>{{ form_widget(form.nomeCognome) }}</p>
-                <p>{{ form_errors(form.nomeCognome) }}</p>
-            </div>
-            <div>
-                <p>{{ form_label(form.commento) }}</p>
-                <p>{{ form_widget(form.commento) }}</p>
-                <p>{{ form_errors(form.commento) }}</p>
-            </div>
+    {{ form_end(form) }}
 
-            <div>
-                <p>{{ form_label(form.data) }}</p>
-                <p>{{ form_widget(form.data) }}</p>
-                <p>{{ form_errors(form.data) }}</p>
-            </div>
 
-            <div>
-                <p>{{ form_label(form.approvato) }}</p>
-                <p>{{ form_widget(form.approvato) }}</p>
-                <p>{{ form_errors(form.approvato) }}</p>
-            </div>
-
-            <input type="submit" value="Salva" />
-
-        {{ form_end(form) }}
-
-    {% block javascripts %}
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-        <script src="{{ asset('bundles/caffeolivuzzoadmin/js/main.js') }}"></script>
-
-    {% endblock %}
-</body>
-</html>
+{% endblock %}

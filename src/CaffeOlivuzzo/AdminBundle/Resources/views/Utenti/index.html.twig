@@ -1,0 +1,40 @@
+{% extends 'CaffeOlivuzzoAdminBundle::base.html.twig' %}
+
+{% block title %}Caffè Olivuzzo Admin Utenti{% endblock %}
+
+{% block body %}
+
+{% if utenti is not empty %}
+<table class="table-sm table-striped table-bordered">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for utente in utenti %}
+    <tr>
+        <td>{{ utente.id }}</td>
+        <td>{{ utente.username }}</td>
+        <td>{{ utente.email }}</td>
+
+        <td style="background-color:#F4F0EA;">
+            <form action="{{ path('_utente_delete', {'id': utente.id}) }}" method="post" class="form-eliminazione">
+                <input type="submit" value="Elimina" />
+            </form>
+
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p>Nessun utente trovato</p>
+{% endif %}
+
+<a href="{{ path('user_registration') }}"><button class="submit">Nuovo Utente</button></a>
+
+
+{% endblock %}

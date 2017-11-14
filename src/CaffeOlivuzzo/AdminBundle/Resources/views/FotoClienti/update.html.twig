@@ -1,0 +1,40 @@
+{% extends 'CaffeOlivuzzoAdminBundle::base.html.twig' %}
+
+{% block title %}Caffè Olivuzzo Admin Foto Clienti{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+
+        <img class="img-thumbnail" width="200" height="auto" src="{{ asset('../../images/nostri-clienti/'~ foto.foto) }}">
+
+        <div>
+            <p>{{ form_label(form.foto) }}</p>
+            <p>{{ form_widget(form.foto) }}</p>
+            <p>{{ form_errors(form.foto) }}</p>
+        </div>
+
+        <div>
+            <p>{{ form_label(form.testoAlternativo) }}</p>
+            <p>{{ form_widget(form.testoAlternativo) }}</p>
+            <p>{{ form_errors(form.testoAlternativo) }}</p>
+        </div>
+
+        <div>
+            <p>{{ form_label(form.data) }}</p>
+            <p>{{ form_widget(form.data) }}</p>
+            <p>{{ form_errors(form.data) }}</p>
+        </div>
+
+        <div>
+            <p>{{ form_label(form.approvato) }}</p>
+            <p>{{ form_widget(form.approvato) }}</p>
+            <p>{{ form_errors(form.approvato) }}</p>
+        </div>
+
+        <input type="submit" value="Salva" />
+
+    {{ form_end(form) }}
+
+
+{% endblock %}

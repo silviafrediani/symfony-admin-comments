@@ -2,13 +2,15 @@
 namespace CaffeOlivuzzo\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * CaffeOlivuzzo\AdminBundle\Entity\User
- *
- * @ORM\Table(name="user")
- * @ORM\Entity(repositoryClass="CaffeOlivuzzo\AdminBundle\Entity\User")
+ * @ORM\Table(name="users")
+ * @ORM\Entity(repositoryClass="CaffeOlivuzzo\AdminBundle\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Email già in uso!")
+ * @UniqueEntity(fields="username", message="Username già in uso!")
  */
 class User implements UserInterface, \Serializable
 {
@@ -21,8 +23,15 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
+     * @Assert\NotBlank()
      */
     private $username;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=64)
@@ -31,6 +40,8 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
@@ -42,75 +53,56 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
-        // potrebbe non essere necessario, vedere la sezione sul sale più avanti
-        // $this->salt = md5(uniqid(null, true));
+        // may not be needed, see section on salt below
+        // $this->salt = md5(uniqid('', true));
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getUsername()
     {
         return $this->username;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getSalt()
     {
-        // *potrebbe* non essere necessario un vero sale, a seconda del codificatore
-        // vedere la sezione sul sale più avanti
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getPassword()
     {
         return $this->password;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getRoles()
     {
         return array('ROLE_USER');
     }
 
-    /**
-     * @inheritDoc
-     */
     public function eraseCredentials()
     {
     }
 
-    /**
-     * @see \Serializable::serialize()
-     */
+    /** @see \Serializable::serialize() */
     public function serialize()
     {
         return serialize(array(
             $this->id,
             $this->username,
             $this->password,
-            // vedere la sezione sul sale più avanti
+            // see section on salt below
             // $this->salt,
         ));
     }
 
-    /**
-     * @see \Serializable::unserialize()
-     */
+    /** @see \Serializable::unserialize() */
     public function unserialize($serialized)
     {
         list (
             $this->id,
             $this->username,
             $this->password,
-            // vedere la sezione sul sale più avanti
+            // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
     }
@@ -137,6 +129,17 @@ class User implements UserInterface, \Serializable
         $this->username = $username;
 
         return $this;
+    }
+
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
     }
 
     /**

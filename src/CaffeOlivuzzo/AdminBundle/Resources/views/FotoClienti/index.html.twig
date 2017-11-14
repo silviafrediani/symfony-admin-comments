@@ -1,91 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends 'CaffeOlivuzzoAdminBundle::base.html.twig' %}
 
-    {% block stylesheets %}
-        <link href="{{ asset('bundles/caffeolivuzzoadmin/css/main.css') }}" rel="stylesheet" />
-    {% endblock %}
+{% block title %}Caffè Olivuzzo Admin Foto Clienti{% endblock %}
 
-</head>
-<body>
+{% block body %}
 
-    <!-- modale confermi eliminazione -->
-    <div class="overlay-modal">
-        <div class="modal-content">
-            <p>Confermi eliminazione?</p>
-            <p>
-                <span class="ok">OK</span>
-                <span class="annulla">Annulla</span>
-            </p>
-        </div>
-    </div>
-    <!-- fine modale -->
+{% if fotos is not empty %}
+<table class="table-sm table-striped table-bordered">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Foto</th>
+        <th>Testo Alternativo</th>
+        <th>Data</th>
+        <th>Approvato</th>
+        <th style="text-align:center" colspan="2">Azioni</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for foto in fotos %}
+    <tr>
+        <td align="center">{{ foto.id }}</td>
+        <td><img class="img-thumbnail" style="margin:5px;width:100px;height:auto;" src="{{ asset('../../images/nostri-clienti/'~ foto.foto) }}"  />
+</td>
+        <td>{{ foto.testoAlternativo }}</td>
+        <td>{{foto.data|date('Y-m-d')}}</td>
 
-    <img src="{{ asset('bundles/caffeolivuzzoadmin/images/logo.png') }}">
+        {% if foto.approvato == 1 %}
+            {% set approvato = 'Sì' %}
+        {% else %}
+            {% set approvato = 'No' %}
+        {% endif %}
 
-    <div id="nav">
-        <ul>
-            <li>
-                <span>Ciao <span>
-            </li>
-            <li>
-                <a href="{{ path('_fotos') }}">Foto</a>
-            </li>
-            <li>
-                <a href="{{ path('_comments', {page: 1 }) }}">Commenti</a>
-            </li>
-            <li>
-                <a href="#">Utenti</a>
-            </li>
+        <td align="center">{{ approvato }}</td>
 
-            <li>
-                <a href="http://www.caffeolivuzzo.it/index.php?pagina=nostri-clienti" target="_blank">Vai al sito</a>
-            </li>
+        <td>
+            <form action="{{ path('_foto_update', {'id': foto.id}) }}" method="post">
+                <input type="submit" value="Modifica" />
+            </form>
+        </td>
 
-            <li>
-                <a href="#">Esci</a>
-            </li>
-        </ul>
-    </div>
-    
-    {% if fotos is not empty %}
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Foto</th>
-            <th>Testo Alternativo</th>
-            <th>Data</th>
-            <th>Approvato</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for foto in fotos %}
-        <tr>
-            <td style="background-color:#F4F0EA;">{{ foto.id }}</td>
-            <td style="background-color:#F4F0EA;"><img width="100" height="auto" src="{{ asset('bundles/caffeolivuzzoadmin/images/nostri-clienti/' ) }}{{foto.foto}}"  />
-    </td>
-            <td style="background-color:#F4F0EA;">{{ foto.testoAlternativo }}</td>
-            <td style="background-color:#F4F0EA;">{{foto.data|date('Y-m-d')}}</td>
-            <td align="center" style="background-color:#F4F0EA;">{{ foto.approvato }}</td>
+        <td>
+            {% if foto.comments is not empty %}
+                {% set hasComments = 'disabled' %}
+            {% else %}
+                {% set hasComments = '' %}
+            {% endif %}
 
-            <td style="background-color:#F4F0EA;">
-                <form action="{{ path('_foto_delete', {'id': foto.id}) }}" method="post" class="form-eliminazione">
-                    <input type="submit" value="Elimina" />
-                </form>
+            <form action="{{ path('_foto_delete', {'id': foto.id}) }}" method="post" class="form-eliminazione">
+                <input type="submit" value="Elimina" {{ hasComments }} class="{{ hasComments }}" />
+                <span class="avviso">Non puoi eliminare una foto che ha commenti!</span>
+            </form>
 
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-        <p>Nessuna foto trovata</p>
-    {% endif %}
+        </td>
 
-    {% block javascripts %}
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-        <script src="{{ asset('bundles/caffeolivuzzoadmin/js/main.js') }}"></script>
-    {% endblock %}
-</body>
-</html>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+    <p>Nessuna foto trovata</p>
+{% endif %}
+
+
+{% endblock %}

@@ -40,7 +40,7 @@ class CommentiClienti
      *
      * @ORM\Column(name="data", type="datetime", nullable=false)
      */
-    private $data = 'CURRENT_TIMESTAMP';
+    private $data;
 
     /**
      * @var integer
@@ -59,7 +59,7 @@ class CommentiClienti
     /**
      * @var \FotoClienti
      *
-     * @ORM\ManyToOne(targetEntity="FotoClienti", inversedBy="CommentiClienti")
+     * @ORM\ManyToOne(targetEntity="FotoClienti" , inversedBy="CommentiClienti")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_foto", referencedColumnName="id")
      * })
