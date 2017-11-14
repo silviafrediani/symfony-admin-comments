@@ -5,7 +5,7 @@
 {% block body %}
 
 {% if fotos is not empty %}
-<table class="table-sm table-striped table-bordered">
+<table class="table-sm table-condensed table-striped table-bordered">
     <thead>
     <tr>
         <th>Id</th>
@@ -35,7 +35,7 @@
 
         <td>
             <form action="{{ path('_foto_update', {'id': foto.id}) }}" method="post">
-                <input type="submit" value="Modifica" />
+                <button class="btn btn-primary" type="submit">Modifica</button>
             </form>
         </td>
 
@@ -47,7 +47,8 @@
             {% endif %}
 
             <form action="{{ path('_foto_delete', {'id': foto.id}) }}" method="post" class="form-eliminazione">
-                <input type="submit" value="Elimina" {{ hasComments }} class="{{ hasComments }}" />
+                <button class="btn btn-primary {{ hasComments }}" {{ hasComments }} type="submit">Elimina</button>
+
                 <span class="avviso">Non puoi eliminare una foto che ha commenti!</span>
             </form>
 

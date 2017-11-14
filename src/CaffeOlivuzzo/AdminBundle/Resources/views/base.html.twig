@@ -36,21 +36,21 @@
                     <span>Ciao {{ app.user.username }}<span>
                 </li>
                 <li>
-                    <a href="{{ path('_fotos') }}">Foto</a>
+                    <a href="{{ path('_fotos') }}" class="btn btn-primary" role="button">Foto</a>
                 </li>
                 <li>
-                    <a href="{{ path('_comments') }}">Commenti</a>
+                    <a href="{{ path('_comments') }}" class="btn btn-primary" role="button">Commenti</a>
                 </li>
                 <li>
-                    <a href="{{ path('_utenti') }}">Utenti</a>
-                </li>
-
-                <li>
-                    <a href="{{ path('_utente_update') }}">I miei dati</a>
+                    <a href="{{ path('_utenti') }}" class="btn btn-primary" role="button">Utenti</a>
                 </li>
 
                 <li>
-                    <a href="{{ path('logout') }}">Esci</a>
+                    <a href="{{ path('_utente_update') }}" class="btn btn-primary" role="button">I miei dati</a>
+                </li>
+
+                <li>
+                    <a href="{{ path('logout') }}" class="btn btn-primary" role="button">Esci</a>
                 </li>
             </ul>
         </div>

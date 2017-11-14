@@ -8,30 +8,30 @@
 
     {{ form_start(form) }}
         <img class="img-thumbnail" width="200" height="auto" src="{{ asset('../../images/nostri-clienti/'~ fotoCliente ) }}">
-        <div>
-            <p>{{ form_label(form.nomeCognome) }}</p>
-            <p>{{ form_widget(form.nomeCognome) }}</p>
-            <p>{{ form_errors(form.nomeCognome) }}</p>
+        <div class="form-group">
+            {{ form_label(form.nomeCognome) }}
+            {{ form_widget(form.nomeCognome, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(form.nomeCognome) }}
         </div>
-        <div>
-            <p>{{ form_label(form.commento) }}</p>
-            <p>{{ form_widget(form.commento) }}</p>
-            <p>{{ form_errors(form.commento) }}</p>
-        </div>
-
-        <div>
-            <p>{{ form_label(form.data) }}</p>
-            <p>{{ form_widget(form.data) }}</p>
-            <p>{{ form_errors(form.data) }}</p>
+        <div class="form-group">
+            {{ form_label(form.commento) }}
+            {{ form_widget(form.commento, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(form.commento) }}
         </div>
 
-        <div>
-            <p>{{ form_label(form.approvato) }}</p>
-            <p>{{ form_widget(form.approvato) }}</p>
-            <p>{{ form_errors(form.approvato) }}</p>
+        <div class="form-group">
+            {{ form_label(form.data) }}
+            {{ form_widget(form.data) }}
+            {{ form_errors(form.data) }}
         </div>
 
-        <input type="submit" value="Salva" />
+        <div class="form-group">
+            {{ form_label(form.approvato) }}
+            {{ form_widget(form.approvato, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_errors(form.approvato) }}
+        </div>
+
+        <button class="btn btn-primary" type="submit">Salva</button>
 
     {{ form_end(form) }}
 

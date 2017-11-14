@@ -6,28 +6,28 @@
 
 {{ form_start(form) }}
 
-    <div>
-        <p>{{ form_label(form.username) }}</p>
-        <p>{{ form_widget(form.username) }}</p>
-        <p>{{ form_errors(form.username) }}</p>
+    <div class="form-group">
+        {{ form_label(form.username) }}
+        {{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.username) }}
     </div>
-    <div>
-        <p>{{ form_label(form.email) }}</p>
-        <p>{{ form_widget(form.email) }}</p>
-        <p>{{ form_errors(form.email) }}</p>
+    <div class="form-group">
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.email) }}
     </div>
-    <div>
-        <p>{{ form_label(form.plainPassword.first) }}</p>
-        <p>{{ form_widget(form.plainPassword.first) }}</p>
-        <p>{{ form_errors(form.plainPassword.first) }}</p>
+    <div class="form-group">
+        {{ form_label(form.plainPassword.first) }}
+        {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.plainPassword.first) }}
     </div>
-    <div>
+    <div class="form-group">
         <label for="user_plainPassword_second">Ripeti Password</label>
-        <p>{{ form_widget(form.plainPassword.second) }}</p>
-        <p>{{ form_errors(form.plainPassword.second) }}</p>
+        {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control'} }) }}
+        {{ form_errors(form.plainPassword.second) }}
     </div>
 
-    <input type="submit" value="Salva">
+    <button class="btn btn-primary" type="submit">Salva</button>
 
 {{ form_end(form) }}
 
