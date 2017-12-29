@@ -6,10 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use CaffeOlivuzzo\AdminBundle\Entity\CommentiClienti;
 use CaffeOlivuzzo\AdminBundle\Entity\FotoClienti;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use CaffeOlivuzzo\AdminBundle\Form\CommentiClientiType;
+
 
 class CommentiClientiController extends Controller
 {
@@ -42,21 +40,8 @@ class CommentiClientiController extends Controller
                 'Nessun commento presente nel database con l\'id '.$id
             );
         }
-        // passiamo al FormBuilder l'oggetto $commento
-        $form = $this->createFormBuilder($commento)
-                    ->add('nomeCognome', TextType::class)
-                    ->add('commento', TextareaType::class)
-                    ->add('approvato', ChoiceType::class, array(
-                        'choices'   => array('No' => '0', 'Sì' => '1'),
-                        'required'  => false,
-                        ))
-                    ->add('data', DateTimeType::class, array(
-                            'placeholder' => array(
-                                'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-                                'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
-                            )
-                        ))
-                    ->getForm();
+
+        $form = $this->createForm(CommentiClientiType::class, $commento);
 
         $form->handleRequest($request);
 

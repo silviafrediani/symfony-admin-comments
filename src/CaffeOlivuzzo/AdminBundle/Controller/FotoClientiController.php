@@ -10,24 +10,39 @@ use CaffeOlivuzzo\AdminBundle\Form\FotoClientiType;
 class FotoClientiController extends Controller
 {
 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        // recupera l’oggetto entity manager di Doctrine
+        $em = $this->getDoctrine()->getManager();
+
         $fotos = $this->getDoctrine()
                      ->getRepository('CaffeOlivuzzoAdminBundle:FotoClienti')
                      ->findAll();
+        
+        $paginator  = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $fotos, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
 
-        return $this->render(
+
+        return $this->render('CaffeOlivuzzoAdminBundle:FotoClienti:index.html.twig', 
+            array('fotos' => $result));
+        
+        /*return $this->render(
             'CaffeOlivuzzoAdminBundle:FotoClienti:index.html.twig',
             array(
                 'fotos' => $fotos
             )
-        );
+        );*/
     }
 
     public function updateAction($id, Request $request)
     {
         // recupera l’oggetto entity manager di Doctrine
         $em = $this->getDoctrine()->getManager();
+        // recupera vecchi dati
         $foto = $em->getRepository('CaffeOlivuzzoAdminBundle:FotoClienti')->find($id);
         // memorizzo percorso cartella foto che prendo da parameters in config.yml
         $fotosPath = $this->getParameter('fotos_directory');
@@ -48,6 +63,7 @@ class FotoClientiController extends Controller
             // $file stores the uploaded file
             /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
             // dopo che il form è stato inviato controllo se l'array $_FILES contiene una foto
+            // adesso $foto contiene i nuovi dati inseriti, non più i vecchi recuperati dal db
             if ( $foto->getFoto() )
             {
                 $file = $foto->getFoto();

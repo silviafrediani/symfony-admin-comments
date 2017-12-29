@@ -55,4 +55,4 @@ security:
         # require ROLE_ADMIN for /admin*
         - { path: ^/comments, roles: ROLE_USER }
         - { path: ^/fotos, roles: ROLE_USER }
-        - { path: ^/utenti, roles: ROLE_USER }
+        - { path: ^/utenti, roles: ROLE_ADMIN }

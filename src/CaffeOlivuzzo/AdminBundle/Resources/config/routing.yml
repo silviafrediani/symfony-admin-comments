@@ -23,9 +23,7 @@ user_registration:
 #foto
 _fotos:
     path: /fotos/
-    defaults: { _controller: CaffeOlivuzzoAdminBundle:FotoClienti:index, page: 1 }
-    requirements:
-      id:  \d+
+    defaults: { _controller: CaffeOlivuzzoAdminBundle:FotoClienti:index }
 
 _foto_delete:
     path: /foto/delete/{id}

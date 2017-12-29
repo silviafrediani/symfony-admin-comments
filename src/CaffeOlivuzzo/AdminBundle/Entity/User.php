@@ -5,6 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="users")
@@ -50,12 +51,25 @@ class User implements UserInterface, \Serializable
      */
     private $isActive;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     *
+     */
+    private $roles;
+
+
     public function __construct()
     {
         $this->isActive = true;
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
+        $this->roles = new ArrayCollection();
     }
+
+    public function getRoles()
+    {
+        return $this->roles->toArray();
+    }    
 
     public function getUsername()
     {
@@ -74,10 +88,6 @@ class User implements UserInterface, \Serializable
         return $this->password;
     }
 
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
 
     public function eraseCredentials()
     {
@@ -202,5 +212,29 @@ class User implements UserInterface, \Serializable
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Add role
+     *
+     * @param \CaffeOlivuzzo\AdminBundle\Entity\Role $role
+     *
+     * @return User
+     */
+    public function addRole(\CaffeOlivuzzo\AdminBundle\Entity\Role $role)
+    {
+        $this->roles[] = $role;
+
+        return $this;
+    }
+
+    /**
+     * Remove role
+     *
+     * @param \CaffeOlivuzzo\AdminBundle\Entity\Role $role
+     */
+    public function removeRole(\CaffeOlivuzzo\AdminBundle\Entity\Role $role)
+    {
+        $this->roles->removeElement($role);
     }
 }

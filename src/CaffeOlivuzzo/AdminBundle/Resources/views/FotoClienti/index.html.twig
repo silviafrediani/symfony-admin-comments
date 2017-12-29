@@ -4,6 +4,11 @@
 
 {% block body %}
 
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(fotos) }}
+</div>  
+
 {% if fotos is not empty %}
 <table class="table-sm table-condensed table-striped table-bordered">
     <thead>
@@ -57,10 +62,15 @@
     </tr>
     {% endfor %}
     </tbody>
+
+  
 </table>
+
+
 {% else %}
     <p>Nessuna foto trovata</p>
 {% endif %}
+
 
 
 {% endblock %}

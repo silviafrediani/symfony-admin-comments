@@ -1,12 +1,6 @@
 imports:
     - { resource: config.yml }
 
-doctrine:
-    orm:
-        auto_generate_proxy_classes:  false # <- change to true
-        proxy_dir:            '%kernel.cache_dir%/doctrine/orm/Proxies'
-        proxy_namespace:      Proxies
-
 monolog:
     handlers:
         main:

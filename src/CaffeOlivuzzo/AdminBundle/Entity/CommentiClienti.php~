@@ -59,7 +59,7 @@ class CommentiClienti
     /**
      * @var \FotoClienti
      *
-     * @ORM\ManyToOne(targetEntity="FotoClienti" , inversedBy="CommentiClienti")
+     * @ORM\ManyToOne(targetEntity="FotoClienti", inversedBy="comments")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_foto", referencedColumnName="id")
      * })
